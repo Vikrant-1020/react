@@ -7,9 +7,11 @@ phases:
     commands:
       - echo Installing source NPM dependencies.
       - npm install
+      - npm run build
   build:
     commands:
-      - npm start & sleep 60
+      - echo "DONE"
+     # - npm start & sleep 60
 artifacts:
   files:
     - '**/*'
