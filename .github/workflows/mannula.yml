@@ -9,3 +9,9 @@ jobs:
     - uses: reviewdog/action-setup@v1
       with:
         reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+
+    - name: review
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        reviewdog -reporter=github-pr-check
