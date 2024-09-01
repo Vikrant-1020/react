@@ -11,6 +11,14 @@ jobs:
       with:
         node-version: 18
     - run: npm install @microsoft/eslint-formatter-sarif
+
+    - name: textlint sarif
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        npx textlint -f @microsoft/eslint-formatter-sarif README.md | \
+          reviewdog -f=sarif -name="textlint" -reporter=github-check -level=info
+            
     - uses: reviewdog/action-setup@v1
       with:
         reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
