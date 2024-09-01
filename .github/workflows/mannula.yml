@@ -21,8 +21,7 @@ jobs:
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npx textlint -f @microsoft/eslint-formatter-sarif README.md | \
-          reviewdog -f=sarif -name="textlint" -reporter=github-check -level=info
+        npx textlint -f @microsoft/eslint-formatter-sarif README.md | reviewdog -f=sarif -name="textlint" -reporter=github-check -level=info
             
     # Optional. [latest,nightly,v.X.Y.Z]
 
