@@ -11,6 +11,7 @@ jobs:
       with:
         node-version: 18
     - run: npm install @microsoft/eslint-formatter-sarif
+    - run: npm install textlint
 
     - uses: reviewdog/action-setup@v1
       with:
