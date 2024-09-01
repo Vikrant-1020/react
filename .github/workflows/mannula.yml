@@ -3,30 +3,14 @@ name: Linting
 on: [pull_request]
 jobs:
   build_and_deploy_job:
+    name: runner / textlint sarif
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v4.0.3
-      with:
-        node-version: 18
-    - run: npm install @microsoft/eslint-formatter-sarif
-    - run: npm install textlint
-
-    - uses: reviewdog/action-setup@v1
-      with:
-        reviewdog_version: latest 
-
-    - name: textlint sarif
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        npx textlint -f @microsoft/eslint-formatter-sarif README.md | reviewdog -f=sarif -name="textlint" -reporter=github-check -level=info
-            
-    # Optional. [latest,nightly,v.X.Y.Z]
-
-    - name: review
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        reviewdog -reporter=github-pr-check
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-setup@v1
+      - run: npm install
+      - name: textlint sarif
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx textlint -f @microsoft/eslint-formatter-sarif README.md | reviewdog -f=sarif -name="textlint" -reporter=github-check -level=info
