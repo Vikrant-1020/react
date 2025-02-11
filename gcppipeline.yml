@@ -34,8 +34,7 @@ steps:
     args:
       - '-c'
       - |
-        NODE_VERSION=18  # Change as needed
-        nvm install $NODE_VERSION && nvm use $NODE_VERSION
+        nvm install v18 && nvm use v18
         node -v
 
   # Step 2: Install dependencies
