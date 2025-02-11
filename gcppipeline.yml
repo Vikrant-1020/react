@@ -29,13 +29,16 @@ steps:
       - $_BUCKET_NAME
       
   # Step 1: Set Node.js version
-  - name: 'gcr.io/cloud-builders/node'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        nvm install v18 && nvm use v18
-        node -v
+  # - name: 'gcr.io/cloud-builders/node'
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       nvm install v18 && nvm use v18
+  #       node -v
+  # Step 2: Install dependencies
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['--version']
 
   # Step 2: Install dependencies
   - name: 'gcr.io/cloud-builders/npm'
