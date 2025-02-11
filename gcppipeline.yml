@@ -22,42 +22,24 @@
 
 steps:
 
-    # Step 1: Copy HTML files to Cloud Storage
   - name: ubuntu
     args:
       - echo
       - $_BUCKET_NAME
       
-  # Step 1: Set Node.js version
-  # - name: 'gcr.io/cloud-builders/node'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       nvm install v18 && nvm use v18
-  #       node -v
-  # Step 2: Install dependencies
-  - name: 'gcr.io/cloud-builders/npm'
-    args: ['--version']
+ - name: 'node:$_NODE_VERSION'
+   entrypoint: 'npm'
+   args: ['install']
+   
+ - name: 'node:$_NODE_VERSION'
+   entrypoint: 'npm'
+   args: ['run', 'build']
 
-  # Step 2: Install dependencies
-  - name: 'gcr.io/cloud-builders/npm'
-    args: ['install']
-
-  # Step 3: Build the React app
-  - name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'build']
-
-  # Step 4: Upload build files to GCS
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', '-r', 'build/*', 'gs://$_BUCKET_NAME/']
 
-  # Step 5: Make files publicly accessible
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['iam', 'ch', 'allUsers:objectViewer', 'gs://$_BUCKET_NAME/']
-
-# substitutions:
-#   BUCKET_NAME: 'your-gcs-bucket-name'  # Replace with your bucket name
 
 timeout: 1200s
 
