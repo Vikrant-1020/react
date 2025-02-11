@@ -19,7 +19,6 @@
 
 
 
-
 steps:
 
   - name: ubuntu
@@ -27,13 +26,13 @@ steps:
       - echo
       - $_BUCKET_NAME
       
- - name: 'node:18'
-   entrypoint: 'npm'
-   args: ['install']
-   
- - name: 'node:18'
-   entrypoint: 'npm'
-   args: ['run', 'build']
+  - name: 'node:18'
+    entrypoint: 'npm'
+    args: ['install']
+    
+  - name: 'node:18'
+    entrypoint: 'npm'
+    args: ['run', 'build']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', '-r', 'build/*', 'gs://$_BUCKET_NAME/']
@@ -45,4 +44,3 @@ timeout: 1200s
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
