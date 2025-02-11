@@ -1,0 +1,21 @@
+steps:
+  # Step 1: Copy HTML files to Cloud Storage
+  - name: ubuntu
+    args:
+      - echo
+      - hello world
+    
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'index.html', 'gs://$_BUCKET_NAME/']
+
+  # Step 2: Make files publicly accessible
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['iam', 'ch', 'allUsers:objectViewer', 'gs://$_BUCKET_NAME/']
+
+substitutions:
+  _BUCKET_NAME: 'admintest001'  # Replace with your bucket name
+
+timeout: 600s
+
+options:
+  logging: CLOUD_LOGGING_ONLY
