@@ -34,6 +34,11 @@ steps:
     entrypoint: 'npm'
     args: ['run', 'build']
 
+  - name: ubuntu
+    args:
+      - cat
+      - build/index.html
+
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', '-r', 'build/*', 'gs://$_BUCKET_NAME/']
 
